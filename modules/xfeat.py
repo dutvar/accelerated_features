@@ -156,8 +156,8 @@ class XFeat(nn.Module):
 
 		#Dict -> log_assignment: [B x M+1 x N+1] matches0: [B x M] matching_scores0: [B x M] matches1: [B x N] matching_scores1: [B x N] matches: List[[Si x 2]], scores: List[[Si]]
 		out = self.lighterglue(data, min_conf = min_conf)
-		
-		return out['matches'][0].cpu().numpy(), out['scores']
+	
+		return out
 	
 
 	@torch.inference_mode()
