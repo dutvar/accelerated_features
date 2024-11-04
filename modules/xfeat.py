@@ -157,7 +157,7 @@ class XFeat(nn.Module):
 		#Dict -> log_assignment: [B x M+1 x N+1] matches0: [B x M] matching_scores0: [B x M] matches1: [B x N] matching_scores1: [B x N] matches: List[[Si x 2]], scores: List[[Si]]
 		out = self.lighterglue(data, min_conf = min_conf)
 		
-		return out['matches'][0], out['scores']
+		return out['matches'][0].cpu().numpy(), out['scores'].cpu().numpy()
 
 	@torch.inference_mode()
 	def match_xfeat(self, img1, img2, top_k = None, min_cossim = -1):
@@ -180,7 +180,7 @@ class XFeat(nn.Module):
 
 		idxs0, idxs1 = self.match(out1['descriptors'], out2['descriptors'], min_cossim=min_cossim )
 
-		return out1['keypoints'][idxs0]), out2['keypoints'][idxs1]
+		return out1['keypoints'][idxs0]).cpu().numpy(), out2['keypoints'][idxs1].cpu().numpy()
 
 	@torch.inference_mode()
 	def match_xfeat_star(self, im_set1, im_set2, top_k = None):
